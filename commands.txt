@@ -1,0 +1,17 @@
+composer create-project laravel/laravel my-project
+cd my-project
+
+
+php artisan serve
+
+php artisan make:migration create_artigos_table --create=artigos
+** Inserir colunas na tabela
+
+php artisan make:model Artigo
+
+** Migration
+(if error) php artisan config:cache
+php artisan migrate
+
+php artisan make:controller ArtigoController --resource
+php artisan make:resource ArtigoResource
