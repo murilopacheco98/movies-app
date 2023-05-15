@@ -1,7 +1,7 @@
 <div class="relative mt-3 md:mt-0" x-data="{ isOpen: true }" @click.away="isOpen = false">
     <input type="text" wire:model="search"
         class="bg-gray-800 text-sm rounded-full w-64 px-4 pl-8 py-1 focus:outline-none focus:shadow-[0_0_2px_0_rgb(0,0,0,0.05)] focus:shadow-slate-100"
-        placeholder="Search" @focus="isOpen = true">
+        placeholder="Pesquisar filme" @focus="isOpen = true">
     <div class="absolute top-0">
         <svg class="fill-current w-4 text-gray-500 mt-2 ml-2" viewBox="0 0 24 24">
             <path class="heroicon-ui"
