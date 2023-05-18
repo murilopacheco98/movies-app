@@ -2,22 +2,22 @@
 
 namespace App\ViewModels;
 
-use App\Http\Controllers\ActorsController;
 use Carbon\Carbon;
 use Spatie\ViewModels\ViewModel;
-use Illuminate\Support\Facades\Route;
 
 class ActorViewModel extends ViewModel
 {
     public $actor;
     public $social;
     public $credits;
+    public $type;
 
-    public function __construct($actor, $social, $credits)
+    public function __construct($actor, $social, $credits, $type)
     {
         $this->actor = $actor;
         $this->social = $social;
         $this->credits = $credits;
+        $this->type = $type;
     }
 
     public function actor()
@@ -71,7 +71,7 @@ class ActorViewModel extends ViewModel
                 ? 'https://image.tmdb.org/t/p/w185' . $movie['poster_path']
                 : 'https://via.placeholder.com/185x278',
                 'title' => $title,
-                'linkToPage' => $movie['media_type'] === 'movie' ? '/movies/' . $movie['id'] : '/movies/' . $movie['id'],
+                'linkToPage' => $movie['media_type'] === 'movie' ? '/movies/' . $movie['id'] : '/tvshows/' . $movie['id'],
                 // dump($movie)
             ])->only([
                     'poster_path',
@@ -110,13 +110,14 @@ class ActorViewModel extends ViewModel
                 'release_year' => isset($releaseDate) ? Carbon::parse($releaseDate)->format('Y') : 'Future',
                 'title' => $title,
                 'character' => isset($movie['character']) ? $movie['character'] : '',
-                // 'linkToPage' => $movie['media_type'] === 'movie' ? route('/movie/', $movie['id']) : route('/tv/', $movie['id']),
+                'linkToPage' => $movie['media_type'] === 'movie' ? '/movies/' . $movie['id'] : '/movies/' . $movie['id'],
             ])->only([
                     'release_date',
                     'release_year',
                     'title',
+                    'media_type',
                     'character',
-                    // 'linkToPage',
+                    'linkToPage',
                 ]);
         })->sortByDesc('release_date');
     }

@@ -7,10 +7,15 @@ use Spatie\ViewModels\ViewModel;
 class ActorsViewModel extends ViewModel
 {
     public $popularActors;
-    public function __construct($popularActors)
+    public $page;
+    public $totalPages;
+    public $type;
+    public function __construct($popularActors, $page, $totalPages, $type)
     {
         $this->popularActors = $popularActors;
-
+        $this->page = $page;
+        $this->totalPages = $totalPages;
+        $this->type = $type;
     }
 
     public function popularActors()
@@ -30,17 +35,6 @@ class ActorsViewModel extends ViewModel
                     'known_for',
                 ]);
         });
-        dump($popularActorsFormatted);
         return $popularActorsFormatted;
     }
-
-    // public function previous()
-    // {
-    //     return $this->page > 1 ? $this->page - 1 : null;
-    // }
-
-    // public function next()
-    // {
-    //     return $this->page < 500 ? $this->page + 1 : null;
-    // }
 }

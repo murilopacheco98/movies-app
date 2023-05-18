@@ -9,23 +9,41 @@ class SearchDropdown extends Component
 {
     public $search = '';
 
+    public $type;
+
     public function render()
     {
         $searchResults = [];
         $tmdbKey = config('services.tmdb.token');
 
-        if (strlen($this->search) >= 2) {
-            $searchResults = Http::get('https://api.themoviedb.org/3/search/movie', [
-                'query' => $this->search,
-                'api_key' => $tmdbKey,
-            ])
-                ->json()['results'];
+        if ($this->type == 'movies') {
+            if (strlen($this->search) >= 2) {
+                $searchResults = Http::get('https://api.themoviedb.org/3/search/movie', [
+                    'query' => $this->search,
+                    'api_key' => $tmdbKey,
+                ])
+                    ->json()['results'];
+            }
+        } elseif ($this-> type == 'tvshows') {
+            if (strlen($this->search) >= 2) {
+                $searchResults = Http::get('https://api.themoviedb.org/3/search/tv', [
+                    'query' => $this->search,
+                    'api_key' => $tmdbKey,
+                ])
+                    ->json()['results'];
+            }
+        } elseif ($this-> type == 'actors') {
+            if (strlen($this->search) >= 2) {
+                $searchResults = Http::get('https://api.themoviedb.org/3/search/person', [
+                    'query' => $this->search,
+                    'api_key' => $tmdbKey,
+                ])
+                    ->json()['results'];
+            }
         }
 
-        // dump($searchResults);
-
         return view('livewire.search-dropdown', [
-            'searchResults' => collect($searchResults)->take(7),
+            'searchResults' => collect($searchResults)->take(10),
         ]);
     }
 }

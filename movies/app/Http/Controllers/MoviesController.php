@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\ViewModels\MovieViewModel;
+use App\ViewModels\MoviesViewModel;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Http;
 
@@ -13,6 +13,7 @@ class MoviesController extends Controller
         $tmdbKey = config('services.tmdb.token');
         $popularMovies = Http::get('https://api.themoviedb.org/3/movie/popular', [
             'api_key' => $tmdbKey,
+            'page' => 1,
         ])
             ->json()['results'];
         $playingNowMovies = Http::get('https://api.themoviedb.org/3/movie/now_playing', [
@@ -25,13 +26,53 @@ class MoviesController extends Controller
         ])
             ->json();
 
-        $view = new MovieViewModel(
+        $view = new MoviesViewModel(
             $popularMovies,
             $playingNowMovies,
-            $genresMovies
+            $genresMovies,
+            1,
+            1,
+            1,
+            'movies',
         );
 
         return view('movies.index', $view);
+    }
+
+    public function moviesPaginated($link, $page)
+    {
+        $tmdbKey = config('services.tmdb.token');
+        $popularMovies = Http::get('https://api.themoviedb.org/3/movie/popular', [
+            'api_key' => $tmdbKey,
+            'page' => $page,
+        ])
+            ->json();
+        $playingNowMovies = Http::get('https://api.themoviedb.org/3/movie/now_playing', [
+            'api_key' => $tmdbKey,
+            'page' => $page,
+        ])
+            ->json();
+        $genresMovies = Http::get('https://api.themoviedb.org/3/genre/movie/list', [
+            'api_key' => $tmdbKey,
+            'language' => 'pt-BR',
+        ])
+            ->json();
+
+        $view = new MoviesViewModel(
+            $popularMovies['results'],
+            $playingNowMovies['results'],
+            $genresMovies,
+            $page,
+            $popularMovies['total_pages'],
+            $playingNowMovies['total_pages'],
+            'movies',
+        );
+
+        if ($link == 'popular') {
+            return view('movies.popularPaginated', $view);
+        } else {
+            return view('movies.cinemaPaginated', $view);
+        }
     }
 
     public function create()
@@ -61,8 +102,12 @@ class MoviesController extends Controller
             // 'language' => 'pt-BR',
         ])
             ->json();
-        dump($movieEN);
-        return view('movies.show', ['moviePT' => $moviePT, 'movieEN' => $movieEN]);
+
+        return view('movies.show', [
+            'moviePT' => $moviePT,
+            'movieEN' => $movieEN,
+            'type' => 'movies'
+        ]);
     }
 
     public function edit(string $id)

@@ -2,13 +2,13 @@
 @dump($tvshow)
 @section('content')
     <div class="tv-info border-b border-gray-800">
-        <div class="container mx-auto px-4 py-16 flex flex-col md:flex-row">
-            <div class="flex-none">
-                <img src="{{ $tvshow['poster_path'] }}" alt="parasite" class="w-64 lg:w-96">
+        <div class="container mx-auto px-12 py-16 flex flex-col md:flex-row">
+            <div class="flex justify-center">
+                <img src="{{ $tvshow['poster_path'] }}" alt="parasite" class="w-[80%] lg:w-96">
             </div>
-            <div class="md:ml-24">
+            <div class="md:ml-20 mt-6 md:mt-0">
                 <h2 class="text-4xl mt-4 md:mt-0 font-semibold">{{ $tvshow['name'] }}</h2>
-                <div class="flex flex-wrap items-center text-gray-400 text-sm">
+                <div class="flex flex-wrap items-center text-gray-400 text-sm mt-2">
                     <svg class="fill-current text-orange-500 w-4" viewBox="0 0 24 24">
                         <g data-name="Layer 2">
                             <path

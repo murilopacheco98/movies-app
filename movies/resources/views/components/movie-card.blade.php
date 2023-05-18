@@ -1,4 +1,4 @@
-<div>
+<div class="mt-8">
     <a href="/movies/{{ $movie['id'] }}">
         <img src="https://image.tmdb.org/t/p/w500/{{ $movie['poster_path'] }}" alt="poster"
             class="hover:opacity-75 transition ease-in-out duration-150">
@@ -13,7 +13,9 @@
             </svg>
             <span class="ml-1">{{ $movie['vote_average'] }}</span>
             <span class="mx-2">|</span>
-            <span>{{ $movie['release_date'] }}</span>
+            @if (isset($movie['release_date']))
+                <span>{{ $movie['release_date'] }}</span>
+            @endif
         </div>
         <div class="text-gray-400 text-sm">
             {{ $movie['genres'] }}

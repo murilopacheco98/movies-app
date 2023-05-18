@@ -1,10 +1,10 @@
 @extends('layout.main')
 @section('content')
-    <div class="w-[90%] ml-[5%] lg:w-[80%] lg:ml-[10%] pt-8 lg:pt-12 ">
-        <h2 class="uppercase tracking-wider text-orange-500 text-lg font-semibold">
+    <div class="container mx-auto px-4 pt-8 lg:pt-10 ">
+        <div class="text-[20px] lg:text-[24px] tracking-wider text-orange-500 font-semibold">
             ATORES
-        </h2>
-        <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-8 lg:gap-8">
+        </div>
+        <div class="mt-8 grid grid-cols-2 sm:grid-cols-3 md:grid-cols-3 lg:grid-cols-4 xl:grid-cols-5 gap-8 lg:gap-8">
             @foreach ($popularActors as $popularActor)
                 @if ($loop->index < 20)
                     <div class="actor">
@@ -20,6 +20,9 @@
                     </div>
                 @endif
             @endforeach
+        </div>
+        <div class="flex items-center justify-center mt-[20px] px-4 py-3 sm:px-6">
+            <x-pagination :page="$page" :totalPages="$totalPages" link="actors" />
         </div>
     </div>
 @endSection

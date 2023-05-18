@@ -10,16 +10,20 @@ use Illuminate\Support\Facades\Http;
 class ActorsController extends Controller
 {
 
-    public function index()
+    public function index($page)
     {
         $tmdbKey = config('services.tmdb.token');
         $popularActors = Http::get('https://api.themoviedb.org/3/person/popular', [
             'api_key' => $tmdbKey,
+            'page' => $page,
         ])
-            ->json()['results'];
+            ->json();
 
         $view = new ActorsViewModel(
-            $popularActors,
+            $popularActors['results'],
+            $page,
+            $popularActors['total_pages'],
+            'actors',
         );
 
         return view('actors.index', $view);
@@ -57,8 +61,8 @@ class ActorsController extends Controller
             $popularActor,
             $social,
             $credits,
+            'actors',
         );
-        dump($view);
 
         return view('actors.show', $view);
     }

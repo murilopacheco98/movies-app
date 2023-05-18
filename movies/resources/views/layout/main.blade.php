@@ -31,11 +31,11 @@
                     <a href="/tvshows" class="hover:text-gray-300">TV SHOWS</a>
                 </li>
                 <li class="ml-6 mr-2">
-                    <a href="/actors" class="hover:text-gray-300">ATORES</a>
+                    <a href="/actors/page=1" class="hover:text-gray-300">ATORES</a>
                 </li>
             </ul>
             <div class="flex flex-row mt-3 md:mt-0">
-                <livewire:search-dropdown />
+                <livewire:search-dropdown :type='$type' />
                 <!-- <div class="ml-4">
                     <a href="#">
                         <img src="/img/avatar.jpg" alt="avatar" class="rounded-full w-8 h-8">

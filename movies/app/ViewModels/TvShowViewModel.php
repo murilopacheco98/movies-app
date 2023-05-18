@@ -8,10 +8,12 @@ use Spatie\ViewModels\ViewModel;
 class TvShowViewModel extends ViewModel
 {
     public $tvshow;
+    public $type;
 
-    public function __construct($tvshow)
+    public function __construct($tvshow, $type)
     {
         $this->tvshow = $tvshow;
+        $this->type = $type;
     }
 
     public function tvshow()
